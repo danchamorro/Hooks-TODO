@@ -115,3 +115,92 @@ export default function App() {
   );
 }
 ```
+
+## Combining useContext and useReducer to Make Initial App Stat
+
+#### Steps
+
+- Remove App component
+- Recreate App component inside the index file.
+- Create context.js
+- Create reducer.js
+- Create components folder with TodoList.js
+
+  `index.js`
+
+```javascript
+import React, { useContext, useReducer } from "react";
+import ReactDOM from "react-dom";
+import * as serviceWorker from "./serviceWorker";
+import TodosContext from "./context";
+import todosReducer from "./reducer";
+import TodoList from "./components/TodoList";
+
+const App = () => {
+  const initialState = useContext(TodosContext);
+  const [state, dispatch] = useReducer(todosReducer, initialState);
+
+  return (
+    <TodosContext.Provider value={{ state, dispatch }}>
+      <TodoList />
+    </TodosContext.Provider>
+  );
+};
+
+ReactDOM.render(<App />, document.getElementById("root"));
+
+// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: http://bit.ly/CRA-PWA
+serviceWorker.unregister();
+```
+
+`context.js`
+
+```javascript
+import React from "react";
+
+const TodosContext = React.createContext({
+  todos: [
+    { id: 1, text: "Eat breakfast", complete: false },
+    { id: 2, text: "Do laundry", complete: false },
+    { id: 3, text: "Finish project", complete: true }
+  ]
+});
+
+export default TodosContext;
+```
+
+`reducer.js`
+
+```javascript
+export default function reducer(state, action) {
+  switch (action.type) {
+    default:
+      return state;
+  }
+}
+```
+
+`TodoList.js`
+
+```javascript
+import React, { useContext } from "react";
+import TodosContext from "../context";
+
+export default function TodoList() {
+  const { state } = useContext(TodosContext);
+
+  return (
+    <div>
+      <ul>
+        {state.todos.map(todo => (
+          <li key={todo.id}>
+            <span>{todo.text}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+```
