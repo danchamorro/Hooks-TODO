@@ -34,6 +34,7 @@ export default function TodoForm() {
         className="border-black border-solid border-2"
         onChange={event => setTodo(event.target.value)}
         value={todo}
+        placeholder="add your todo"
       />
     </form>
   );

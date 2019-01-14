@@ -14,7 +14,7 @@ export default function TodoList() {
         {state.todos.map(todo => (
           <li
             key={todo.id}
-            className="bg-orange-dark border-black border-dashed border-2 my-2 py4 flex items-center"
+            className="bg-orange-dark border-black border-dashed border-2 my-2 flex items-center"
           >
             <span
               onDoubleClick={() =>
